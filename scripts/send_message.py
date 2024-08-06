@@ -59,6 +59,12 @@ def build_card_message(args):
         }
     }
 
+    if args.lark_signature_verification:
+        timestamp = str(int(time.time() * 1000))
+        sign = gen_sign(timestamp, args.lark_signature_verification)
+        message_card["timestamp"] = timestamp
+        message_card["sign"] = sign
+
     message_card_json = json.dumps(message_card, indent=4, ensure_ascii=False)
     return message_card_json
 
@@ -73,10 +79,11 @@ if __name__ == "__main__":
 
     message = build_card_message(args)
     print("Notify message: ", message)
-    if args.lark_signature_verification:
-        timestamp = str(int(time.time() * 1000))
-        sign = gen_sign(timestamp, args.lark_signature_verification)
-        subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-H", "X-Lark-Request-Timestamp:" + timestamp, "-H", "token: " + sign, "-d", message, args.lark_bot_notify_webhook], check=True)
-    else:
-        subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-d", message, args.lark_bot_notify_webhook], check=True)
+    subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-d", message, args.lark_bot_notify_webhook], check=True)
+    # if args.lark_signature_verification:
+    #     timestamp = str(int(time.time() * 1000))
+    #     sign = gen_sign(timestamp, args.lark_signature_verification)
+    #     subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-H", "X-Lark-Request-Timestamp:" + timestamp, "-H", "token: " + sign, "-d", message, args.lark_bot_notify_webhook], check=True)
+    # else:
+    #     subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-d", message, args.lark_bot_notify_webhook], check=True)
     print("Notify message sent succeed")
