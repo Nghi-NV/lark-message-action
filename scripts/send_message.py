@@ -6,7 +6,7 @@ import subprocess
 import json
 import argparse
 
-def build_card_message():
+def build_card_message(args):
     elements = [
         {
             "tag": "column_set",
