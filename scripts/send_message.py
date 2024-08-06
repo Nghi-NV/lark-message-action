@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import base64
 import hmac
+import time
 
 def gen_sign(timestamp, secret):
   string_to_sign = '{}\n{}'.format(timestamp, secret)
