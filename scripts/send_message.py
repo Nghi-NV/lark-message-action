@@ -65,7 +65,7 @@ def build_card_message(args):
     if args.lark_signature_verification:
         # The timestamp used is more than 1 hour from the time the request was sent, and the signature has expired
         currentTime = int(time.time() * 1000)
-        timestamp = str(currentTime + 2 * 60 * 60 * 1000)
+        timestamp = str(currentTime - 2 * 60 * 60 * 1000)
         sign = gen_sign(timestamp, args.lark_signature_verification)
         message_card["timestamp"] = timestamp
         message_card["sign"] = sign
