@@ -10,7 +10,7 @@ Required: **YES**.
 Lark Bot Notify Webhook
 
 ## ``lark-signature-verification``
-Required: **No**.  
+Required: **NO**.  
 
 Lark signature verification
 
@@ -25,7 +25,7 @@ Required: **YES**.
 Notify content
 
 ## ``header-color``
-Required: **No**.  
+Required: **NO**.  
 Default: **green**
 
 Notify header color
