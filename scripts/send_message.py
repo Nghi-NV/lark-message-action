@@ -5,6 +5,15 @@ import os
 import subprocess
 import json
 import argparse
+import hashlib
+import base64
+import hmac
+
+def gen_sign(timestamp, secret):
+  string_to_sign = '{}\n{}'.format(timestamp, secret)
+  hmac_code = hmac.new(string_to_sign.encode("utf-8"), digestmod=hashlib.sha256).digest()
+  sign = base64.b64encode(hmac_code).decode('utf-8')
+  return sign
 
 def build_card_message(args):
     elements = [
@@ -64,7 +73,9 @@ if __name__ == "__main__":
     message = build_card_message(args)
     print("Notify message: ", message)
     if args.lark_signature_verification:
-        subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-H", "x-lark-signature: " + args.lark_signature_verification, "-d", message, args.lark_bot_notify_webhook], check=True)
+        timestamp = str(int(time.time() * 1000))
+        sign = gen_sign(timestamp, args.lark_signature_verification)
+        subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-H", "X-Lark-Request-Timestamp:" + timestamp, "-H", "token: " + sign, "-d", message, args.lark_bot_notify_webhook], check=True)
     else:
         subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-d", message, args.lark_bot_notify_webhook], check=True)
     print("Notify message sent succeed")
