@@ -48,7 +48,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Upload to Next Cloud
+      - name: Send message to Lark
         uses: Nghi-NV/lark-message-action@v1
         with:
           title: "Notification"
