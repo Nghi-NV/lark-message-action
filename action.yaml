@@ -8,6 +8,9 @@ inputs:
   lark-bot-notify-webhook:
     description: 'Lark Bot Notify Webhook'
     required: true
+  lark-signature-verification:
+    description: 'Lark Signature Verification'
+    required: false
   title:
     description: 'Notify title'
     required: true
@@ -24,4 +27,4 @@ runs:
     - name: Send message to Lark
       shell: bash
       run: |
-        python $GITHUB_ACTION_PATH/scripts/send_message.py --title "${{ inputs.title }}" --content "${{ inputs.content }}" --lark-bot-notify-webhook "${{ inputs.lark-bot-notify-webhook }}" --header-color "${{ inputs.header-color }}"
+        python $GITHUB_ACTION_PATH/scripts/send_message.py --title "${{ inputs.title }}" --content "${{ inputs.content }}" --lark-signature-verification "${{ inputs.lark-signature-verification }}" --lark-bot-notify-webhook "${{ inputs.lark-bot-notify-webhook }}" --header-color "${{ inputs.header-color }}"

@@ -58,9 +58,13 @@ if __name__ == "__main__":
     parser.add_argument('--content', type=str, help='Content', required=True)
     parser.add_argument('--header-color', type=str, help='Header color', default="green")
     parser.add_argument('--lark-bot-notify-webhook', type=str, help='Lark webhook', required=True)
+    parser.add_argument('--lark-signature-verification', type=str, help='Lark signature verification', required=False)
     args = parser.parse_args()
 
     message = build_card_message(args)
     print("Notify message: ", message)
-    subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-d", message, args.lark_bot_notify_webhook], check=True)
+    if args.lark_signature_verification:
+        subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-H", "x-lark-signature: " + args.lark_signature_verification, "-d", message, args.lark_bot_notify_webhook], check=True)
+    else:
+        subprocess.run(["curl", "-X", "POST", "-H", "Content-Type: application/json", "-d", message, args.lark_bot_notify_webhook], check=True)
     print("Notify message sent succeed")

@@ -12,5 +12,5 @@ jobs:
         with:
           title: "Notification"
           content: "Hello"
-          header-color: "red"
+          header-color: "green"
           lark-bot-notify-webhook: ${{ secrets.LARK_BOT_NOTIFY_WEBHOOK }}
