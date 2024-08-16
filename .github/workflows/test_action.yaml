@@ -11,7 +11,7 @@ jobs:
         uses: ./
         with:
           title: "Notification"
-          content: "Lark Bot message ${{ secrets.LARK_BOT_SIGNATURE_VERIFICATION }}"
+          content: "Lark Bot message https://github.com/Nghi-NV/lark-message-action"
           header-color: "green"
           lark-bot-notify-webhook: ${{ secrets.LARK_BOT_NOTIFY_WEBHOOK }}
           lark-signature-verification: ${{ secrets.LARK_BOT_SIGNATURE_VERIFICATION }}
